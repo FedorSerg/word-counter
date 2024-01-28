@@ -1,6 +1,11 @@
 package com.example.generativeai.controller;
 
 import com.example.generativeai.dto.PostDto;
+import com.example.generativeai.service.PostService;
+import java.util.List;
+import java.util.Optional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,11 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/posts")
+@RequiredArgsConstructor
 public class PostController {
 
+  private final PostService postService;
+
   @GetMapping("/all")
-  public String getPostById() {
-    return "Get all Posts";
+  public ResponseEntity<List<PostDto>> getAllPosts() {
+    return ResponseEntity.of(Optional.of(
+        postService.getAllPosts()
+    ));
   }
 
   @GetMapping("/all/followed")
@@ -33,11 +43,11 @@ public class PostController {
 
   @PostMapping
   public String createPost(@RequestBody PostDto dto) {
-    return "Create Post: " + dto.getName();
+    return "Create Post: " + dto.getTitle();
   }
 
   @PutMapping("/update-like/{id}")
   public String updatePost(@PathVariable Long id, @RequestBody PostDto dto) {
-    return "Update Post with ID " + id + " to: " + dto.getName();
+    return "Update Post with ID " + id + " to: " + dto.getTitle();
   }
 }

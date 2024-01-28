@@ -26,5 +26,5 @@ public class PostEntity {
   private String body;
 
   @ManyToOne
-  private UserEntity author;
+  private PersonEntity author;
 }

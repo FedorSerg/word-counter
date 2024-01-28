@@ -1,13 +1,13 @@
 DO
 $$
     DECLARE
-        scriptName VARCHAR := 'Insert user and post data';
+        scriptName VARCHAR := 'Insert person and post data';
     BEGIN
         RAISE
             NOTICE 'Start of % ...', scriptName;
 
         -- Insert Users
-        INSERT INTO "user" (login)
+        INSERT INTO person (login)
         VALUES ('JohnDoe'),
                ('AliceSmith'),
                ('BobJohnson'),
@@ -45,7 +45,7 @@ $$
                 5);
 
 -- Insert Likes
-        INSERT INTO post_likes (post_id, user_id)
+        INSERT INTO post_likes (post_id, person_id)
         VALUES (1, 2),
                (2, 3),
                (3, 4), (3, 5),
@@ -62,7 +62,7 @@ $$
                (14, 1), (14, 2), (14, 3);
 
 -- Insert Subscriptions
-        INSERT INTO user_subscriptions (user_id, subscription_id)
+        INSERT INTO person_subscriptions (person_id, subscription_id)
         VALUES (1, 2), (1, 3), (1, 4),
                (2, 3), (2, 1),
                (3, 4), (3, 1),
