@@ -4,6 +4,7 @@ import com.example.generativeai.entity.PostEntity;
 import com.example.generativeai.entity.PersonEntity;
 import jakarta.persistence.criteria.CriteriaQuery;
 import java.util.List;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class HibernateSessionFactoryUtils {
+public class HibernateSessionFactoryUtils <T> {
 
   @Value("${spring.datasource.url}")
   private String datasourceUrl;
@@ -35,7 +36,7 @@ public class HibernateSessionFactoryUtils {
 
   private SessionFactory sessionFactory;
 
-  private SessionFactory getSessionFactory() {
+  public SessionFactory getSessionFactory() {
     if (sessionFactory == null) {
       try {
         Configuration configuration = new Configuration();
@@ -58,12 +59,20 @@ public class HibernateSessionFactoryUtils {
     return sessionFactory;
   }
 
-  public <T> List<T> findAllData(Class<T> type) {
+  public List<T> findAllData(@NonNull Class<T> type) {
     try (Session session = this.getSessionFactory().openSession()) {
       CriteriaQuery<T> criteria = session.getCriteriaBuilder().createQuery(type);
       criteria.from(type);
       return session.createQuery(criteria).getResultList();
-//      return session.createQuery("FROM PostEntity").list();
+
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  public T findDataById(@NonNull Class<T> type, Long id) {
+    try (Session session = this.getSessionFactory().openSession()) {
+      return session.get(type, id);
     } catch (Exception e) {
       throw new RuntimeException(e);
     }

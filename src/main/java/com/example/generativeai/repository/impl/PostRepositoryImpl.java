@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class PostRepositoryImpl implements PostRepository {
 
-  private final HibernateSessionFactoryUtils hibernateSessionFactoryUtils;
+  private final HibernateSessionFactoryUtils<PostEntity> hibernateSessionFactoryUtils;
 
   @Override
   public List<PostEntity> findAll() {
