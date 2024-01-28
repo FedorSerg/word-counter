@@ -20,3 +20,16 @@ Use __Hibernate__ to persist the post and user data in the database.
   - Was the code ready to run after generation? What did you have to change to make it usable?
   - Which challenges did you face during completion of the task?
   - Which specific prompts you learned as a good practice to complete the task?
+
+## How to run:
+
+### Prepare database
+- If you have a stand with empty DB:
+  - add these environment variables for the application, changing the XXXs to real values:
+  `POSTGRESQL_HOST=XXX;POSTGRESQL_PORT=XXX;POSTGRESQL_DATABASE=XXX;POSTGRESQL_USER=XXX;POSTGRESQL_PASSWORD=XXX`
+- If you want to run database locally:
+  - install Docker, if you don't have it yet
+  - go to the project root in terminal (src\main\java\com\example\generativeai) and run `docker-compose up`. You can check the file docker-compose.yml and update the ports or the database name, password and login there
+  - if you didn't change the docker-compose.yml, then add these environment variables for the application:
+  `POSTGRESQL_HOST=localhost;POSTGRESQL_PORT=5000;POSTGRESQL_DATABASE=genai;POSTGRESQL_PASSWORD=genai;POSTGRESQL_USER=genai`
+
