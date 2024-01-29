@@ -2,8 +2,8 @@ package com.example.generativeai.service.impl;
 
 import com.example.generativeai.dto.PersonDto;
 import com.example.generativeai.repository.AuthRepository;
-import com.example.generativeai.repository.PersonRepository;
 import com.example.generativeai.service.AuthService;
+import java.util.Optional;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,25 +13,24 @@ import org.springframework.stereotype.Service;
 public class AuthServiceStub implements AuthService {
 
   private final AuthRepository authRepository;
-  private final PersonRepository personRepository;
-
-  @Override
-  public boolean checkLogin() {
-    return false;
-  }
 
   @Override
   public PersonDto getAuthPersonInfo() {
-    return null;
+    return Optional.ofNullable(authRepository.getAuthorizedPerson())
+        .map(p -> PersonDto.builder()
+            .id(p.getId())
+            .login(p.getLogin())
+            .build())
+        .orElse(null);
   }
 
   @Override
   public void login(@NonNull String personLogin) {
-    authRepository.insertAuthorizedPerson();
+    authRepository.insertAuthorizedPerson(personLogin);
   }
 
   @Override
   public void logout() {
-
+    authRepository.dropAuthorizedPerson();
   }
 }

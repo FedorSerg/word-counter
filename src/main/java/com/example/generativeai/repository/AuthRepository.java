@@ -6,7 +6,7 @@ public interface AuthRepository {
 
   PersonEntity getAuthorizedPerson();
 
-  void insertAuthorizedPerson();
+  void insertAuthorizedPerson(String personLogin);
 
   void dropAuthorizedPerson();
 

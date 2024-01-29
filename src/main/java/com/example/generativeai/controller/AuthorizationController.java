@@ -1,7 +1,6 @@
 package com.example.generativeai.controller;
 
 import com.example.generativeai.dto.PersonDto;
-import com.example.generativeai.repository.PersonRepository;
 import com.example.generativeai.service.AuthService;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -19,13 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthorizationController {
 
   private final AuthService authService;
-  private final PersonRepository personRepository;
 
-  @GetMapping("/find-by-login/{login}")
-  public ResponseEntity<PersonDto> test(@PathVariable String login) {
-    var q = personRepository.findByLogin(login);
-    return ResponseEntity.of(Optional.of(
-        PersonDto.builder().id(q.getId()).login(q.getLogin()).build()
+  @GetMapping("/me")
+  public ResponseEntity<PersonDto> getAuthorizedUser() {
+    return ResponseEntity.of(Optional.ofNullable(
+        authService.getAuthPersonInfo()
     ));
   }
 

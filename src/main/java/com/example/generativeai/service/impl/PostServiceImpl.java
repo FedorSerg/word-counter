@@ -8,7 +8,6 @@ import com.example.generativeai.service.PostService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -17,7 +16,6 @@ public class PostServiceImpl implements PostService {
   private final PostRepository postRepository;
 
   @Override
-  @Transactional
   public List<PostDto> getAllPosts() {
     return postRepository.findAll().stream()
         .map(p -> PostDto.builder().id(p.getId())

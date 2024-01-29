@@ -15,7 +15,6 @@ project:
   db:
     show-hibernate-scripts: false
     driver-class: org.postgresql.Driver
-    dialect: org.hibernate.dialect.PostgreSQLDialect
 
 logging:
   level:

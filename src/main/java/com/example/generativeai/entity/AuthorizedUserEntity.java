@@ -23,5 +23,5 @@ public class AuthorizedUserEntity {
   private Short id;
 
   @OneToOne
-  private PersonEntity authorizedPerson;
+  private PersonEntity person;
 }
