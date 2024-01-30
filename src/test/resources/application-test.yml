@@ -1,0 +1,20 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    username: test
+    password: test
+    url: jdbc:tc:postgresql:10.12:///test
+    hikari:
+      maximum-pool-size: 4
+  flyway:
+    enabled: true
+    mixed: true
+    locations: classpath:/db/migration/
+    clean-on-validation-error: true
+    baseline-on-migrate: true
+    baseline-version: 0
+  jpa:
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
