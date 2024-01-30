@@ -15,6 +15,13 @@ import org.hibernate.cfg.Configuration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+/**
+ * Utility class for managing Hibernate sessions and database operations.
+ * This class provides methods to obtain Hibernate sessions, execute common database operations,
+ * and handle resource management.
+ *
+ * @param <T> The type of entity for which the session utilities are provided.
+ */
 @Component
 @RequiredArgsConstructor
 public class HibernateSessionUtils<T> {
@@ -36,6 +43,14 @@ public class HibernateSessionUtils<T> {
 
   private SessionFactory sessionFactory;
 
+  /**
+   * Obtain a Hibernate session.
+   *
+   * <p>If the session factory is not initialized, it is created using configuration properties
+   * and annotated entity classes. The configuration includes connection details and Hibernate settings.</p>
+   *
+   * @return A Hibernate session.
+   */
   public Session getSession() {
     if (sessionFactory == null) {
       try {
@@ -59,6 +74,13 @@ public class HibernateSessionUtils<T> {
     return sessionFactory.openSession();
   }
 
+  /**
+   * Retrieve all instances of a specific entity type from the database.
+   *
+   * @param type The entity class to query.
+   * @return A list of entities retrieved from the database.
+   * @throws RuntimeException If an error occurs during database access.
+   */
   public List<T> findAllData(@NonNull Class<T> type) {
     try (Session session = this.getSession()) {
       CriteriaQuery<T> criteria = session.getCriteriaBuilder().createQuery(type);
@@ -70,6 +92,14 @@ public class HibernateSessionUtils<T> {
     }
   }
 
+  /**
+   * Retrieve an entity by its identifier.
+   *
+   * @param type The entity class.
+   * @param id   The identifier of the entity to retrieve.
+   * @return The entity with the specified identifier, or {@code null} if not found.
+   * @throws RuntimeException If an error occurs during database access.
+   */
   public T findDataById(@NonNull Class<T> type, @NonNull Object id) {
     try (Session session = this.getSession()) {
       return session.get(type, id);
@@ -78,6 +108,12 @@ public class HibernateSessionUtils<T> {
     }
   }
 
+  /**
+   * Truncate a table by deleting all records.
+   *
+   * @param type The entity class representing the table to truncate.
+   * @throws RuntimeException If an error occurs during database access.
+   */
   public void truncateTable(@NonNull Class<T> type) {
     try (Session session = this.getSession()) {
       CriteriaDelete<T> criteria = session.getCriteriaBuilder().createCriteriaDelete(type);
@@ -89,6 +125,13 @@ public class HibernateSessionUtils<T> {
     }
   }
 
+  /**
+   * Save an entity to the database.
+   *
+   * @param entity The entity to save.
+   * @return The identifier of the saved entity.
+   * @throws RuntimeException If an error occurs during database access.
+   */
   public Object save(T entity) {
     Object id;
     try (Session session = this.getSession()) {

@@ -16,6 +16,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Entity representing a social media post.
+ */
 @Data
 @Builder
 @NoArgsConstructor

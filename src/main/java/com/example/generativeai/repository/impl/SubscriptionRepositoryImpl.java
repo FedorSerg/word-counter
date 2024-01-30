@@ -11,6 +11,12 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 
+/**
+ * Implementation of {@link SubscriptionRepository} using Hibernate for database operations
+ * related to user subscriptions.
+ *
+ * <p>This class provides methods for following and unfollowing other users.</p>
+ */
 @Repository
 @RequiredArgsConstructor
 public class SubscriptionRepositoryImpl implements SubscriptionRepository {
@@ -18,6 +24,13 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
   private final PersonRepository personRepository;
   private final HibernateSessionUtils<AuthorizedUserEntity> hibernateSessionUtils;
 
+  /**
+   * Follow another user by creating a subscription relationship in the database.
+   *
+   * @param authPersonId           The ID of the authenticated person.
+   * @param personToUnfollowLogin  The login of the person to follow.
+   * @throws RuntimeException If an error occurs during database access.
+   */
   @Override
   public void follow(@NonNull Long authPersonId, @NonNull String personToUnfollowLogin) {
     updateFollow(authPersonId, personToUnfollowLogin,
@@ -25,6 +38,13 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
             "VALUES (%d, %d) ON CONFLICT DO NOTHING");
   }
 
+  /**
+   * Unfollow another user by removing the subscription relationship from the database.
+   *
+   * @param authPersonId           The ID of the authenticated person.
+   * @param personToUnfollowLogin  The login of the person to unfollow.
+   * @throws RuntimeException If an error occurs during database access.
+   */
   @Override
   public void unfollow(@NonNull Long authPersonId, @NonNull String personToUnfollowLogin) {
     updateFollow(authPersonId, personToUnfollowLogin,

@@ -24,6 +24,9 @@ public class PostController {
 
   private final PostService postService;
 
+  /**
+   * Get all posts.
+   */
   @GetMapping("/all")
   public ResponseEntity<List<PostDto>> getAllPosts() {
     return ResponseEntity.of(Optional.of(
@@ -31,6 +34,9 @@ public class PostController {
     ));
   }
 
+  /**
+   * Get posts by followed authors.
+   */
   @GetMapping("/all/followed")
   public ResponseEntity<List<PostDto>> getPostsByFollowedAuthors() {
     return ResponseEntity.of(Optional.of(
@@ -38,6 +44,9 @@ public class PostController {
     ));
   }
 
+  /**
+   * Create a new post.
+   */
   @PostMapping
   public ResponseEntity<PostDto> createPost(@RequestBody PostDto dto) {
     return ResponseEntity.of(Optional.of(
@@ -45,6 +54,9 @@ public class PostController {
     ));
   }
 
+  /**
+   * Like or remove like from a post.
+   */
   @PutMapping("/update-like/{id}")
   public ResponseEntity<PostDto> updateLikeOnPost(@PathVariable Long id) {
     return ResponseEntity.of(Optional.of(

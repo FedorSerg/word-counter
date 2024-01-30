@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Data Transfer Object (DTO) for representing a post.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -14,6 +17,5 @@ public class PostDto {
   private String title;
   private String body;
   private String authorLogin;
-
   private Integer likeCount;
 }

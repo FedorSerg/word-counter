@@ -10,6 +10,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Entity representing a person.
+ */
 @Data
 @Builder
 @NoArgsConstructor

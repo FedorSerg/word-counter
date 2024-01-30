@@ -11,21 +11,40 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+/**
+ * Global exception handler for the REST controllers.
+ */
 @ControllerAdvice
 @RequiredArgsConstructor
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
+  /**
+   * Handles DeniedRequestException and returns a FORBIDDEN response.
+   */
   @ExceptionHandler(DeniedRequestException.class)
-  protected ResponseEntity<Object> handle403NotFoundException(RuntimeException ex,
+  protected ResponseEntity<Object> handle403Forbidden(RuntimeException ex,
                                                               WebRequest request) {
     return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(),
         HttpStatus.FORBIDDEN, request);
   }
 
+  /**
+   * Handles NoSuchElementException and returns a NOT_FOUND response.
+   */
   @ExceptionHandler(NoSuchElementException.class)
   protected ResponseEntity<Object> handle404NotFoundException(RuntimeException ex,
                                                               WebRequest request) {
     return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(),
         HttpStatus.NOT_FOUND, request);
+  }
+
+  /**
+   * Handles generic exceptions and returns an INTERNAL_SERVER_ERROR response.
+   */
+  @ExceptionHandler(Exception.class)
+  protected ResponseEntity<Object> handle500InternalServerError(Exception ex, WebRequest request) {
+    // Log the exception
+    return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(),
+        HttpStatus.INTERNAL_SERVER_ERROR, request);
   }
 }

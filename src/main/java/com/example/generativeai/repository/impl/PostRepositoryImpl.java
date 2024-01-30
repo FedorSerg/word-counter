@@ -11,17 +11,36 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 
+/**
+ * Implementation of {@link PostRepository} using Hibernate for database operations
+ * related to posts.
+ *
+ * <p>This class provides methods for retrieving posts, finding posts by subscriptions,
+ * saving new posts, and updating likes on posts.</p>
+ */
 @Repository
 @RequiredArgsConstructor
 public class PostRepositoryImpl implements PostRepository {
 
   private final HibernateSessionUtils<PostEntity> hibernateSessionUtils;
 
+  /**
+   * Retrieve all posts from the database.
+   *
+   * @return A list of all posts.
+   */
   @Override
   public List<PostEntity> findAll() {
     return hibernateSessionUtils.findAllData(PostEntity.class);
   }
 
+  /**
+   * Retrieve posts from the database based on the subscriptions of the authenticated person.
+   *
+   * @param authPerson The authenticated person.
+   * @return A list of posts from subscribed authors.
+   * @throws RuntimeException If an error occurs during database access.
+   */
   @Override
   public List<PostEntity> findAllBySubscriptions(@NonNull PersonEntity authPerson) {
     try (Session session = hibernateSessionUtils.getSession()) {
@@ -36,12 +55,26 @@ public class PostRepositoryImpl implements PostRepository {
     }
   }
 
+  /**
+   * Save a new post in the database.
+   *
+   * @param post The post to be saved.
+   * @return The saved post.
+   */
   @Override
   public PostEntity save(@NonNull PostEntity post) {
     Object id = hibernateSessionUtils.save(post);
     return hibernateSessionUtils.findDataById(PostEntity.class, id);
   }
 
+  /**
+   * Update the like status on a post in the database.
+   *
+   * @param authPerson The authenticated person.
+   * @param postId     The ID of the post.
+   * @return The updated post.
+   * @throws RuntimeException If an error occurs during database access.
+   */
   @Override
   public PostEntity updateLikeOnPost(@NonNull PersonEntity authPerson, @NonNull Long postId) {
     PostEntity post = hibernateSessionUtils.findDataById(PostEntity.class, postId);
@@ -52,7 +85,8 @@ public class PostRepositoryImpl implements PostRepository {
     return hibernateSessionUtils.findDataById(PostEntity.class, postId);
   }
 
-  private void updateLike(@NonNull PersonEntity authPerson, @NonNull Long postId, @NonNull String sql) {
+  private void updateLike(@NonNull PersonEntity authPerson, @NonNull Long postId,
+                          @NonNull String sql) {
     try (Session session = hibernateSessionUtils.getSession()) {
       Transaction transaction = session.beginTransaction();
       session.createNativeMutationQuery(String.format(sql,
