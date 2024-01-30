@@ -57,7 +57,7 @@ public class PostServiceImpl implements PostService {
   public PostDto createAndReturn(@NonNull PostDto dto) {
     PersonEntity authPerson = authRepository.getAuthorizedPerson();
     PostEntity newEntity = PostEntity.builder()
-        .title(dto.getTitle()).body(dto.getBody()).author(authPerson)
+        .title(dto.title()).body(dto.body()).author(authPerson)
         .build();
     return mapEntityToDto(postRepository.save(newEntity));
   }

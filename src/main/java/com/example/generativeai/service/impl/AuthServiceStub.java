@@ -33,7 +33,7 @@ public class AuthServiceStub implements AuthService {
     if (authPerson.isEmpty()) {
       throw new DeniedRequestException("Not authorized");
     } else {
-      return authPerson.get().getId();
+      return authPerson.get().id();
     }
   }
 
