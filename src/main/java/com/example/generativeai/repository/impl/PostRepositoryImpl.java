@@ -45,10 +45,10 @@ public class PostRepositoryImpl implements PostRepository {
   public List<PostEntity> findAllBySubscriptions(@NonNull PersonEntity authPerson) {
     try (Session session = hibernateSessionUtils.getSession()) {
       return session.createNativeQuery(String.format(
-              "SELECT post.* FROM post " +
-                  "JOIN person author ON post.author_id = author.id " +
-                  "JOIN person_subscriptions ps ON author.id = ps.subscription_id " +
-                  "WHERE ps.person_id = %d", authPerson.getId()),
+              "SELECT post.* FROM post "
+                  + "JOIN person author ON post.author_id = author.id "
+                  + "JOIN person_subscriptions ps ON author.id = ps.subscription_id "
+                  + "WHERE ps.person_id = %d", authPerson.getId()),
           PostEntity.class).getResultList();
     } catch (Exception e) {
       throw new RuntimeException(e);

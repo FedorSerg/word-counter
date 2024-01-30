@@ -45,9 +45,8 @@ public class HibernateSessionUtils<T> {
 
   /**
    * Obtain a Hibernate session.
-   *
-   * <p>If the session factory is not initialized, it is created using configuration properties
-   * and annotated entity classes. The configuration includes connection details and Hibernate settings.</p>
+   * If the session factory is not initialized, it is created using configuration properties and
+   * annotated entity classes. The configuration includes connection details and Hibernate settings.
    *
    * @return A Hibernate session.
    */

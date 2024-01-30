@@ -23,7 +23,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
    */
   @ExceptionHandler(DeniedRequestException.class)
   protected ResponseEntity<Object> handle403Forbidden(RuntimeException ex,
-                                                              WebRequest request) {
+                                                      WebRequest request) {
     return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(),
         HttpStatus.FORBIDDEN, request);
   }

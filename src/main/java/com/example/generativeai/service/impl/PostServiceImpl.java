@@ -15,8 +15,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * Implementation of {@link PostService} providing operations related to posts.
- *
- * <p>This class includes methods for retrieving posts, creating posts, and updating likes on posts.</p>
+ * This class includes methods for retrieving posts, creating posts, and updating likes on posts.
  */
 @Service
 @RequiredArgsConstructor

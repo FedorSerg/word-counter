@@ -33,3 +33,13 @@ Use __Hibernate__ to persist the post and user data in the database.
   - if you didn't change the docker-compose.yml, then add these environment variables for the application:
   `POSTGRESQL_HOST=localhost;POSTGRESQL_PORT=5000;POSTGRESQL_DATABASE=genai;POSTGRESQL_PASSWORD=genai;POSTGRESQL_USER=genai`
 
+### Generate code coverage report
+Run `mvn clean install` command. The report will be generated in 'target/site/jacoco'.
+
+### Code checks report
+Run `mvn checkstyle:check` command: all the failed checks will be shown in console.
+
+### Code complexity metrics
+Code complexity metrics can be found in 'target/site/jacoco/index.html' after generating code coverage reports.
+
+Cyclomatic Complexity (`cxty` column) is the minimum number of paths that can, in (linear) combination, generate all possible paths through a method.

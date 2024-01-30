@@ -27,22 +27,22 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
   /**
    * Follow another user by creating a subscription relationship in the database.
    *
-   * @param authPersonId           The ID of the authenticated person.
-   * @param personToUnfollowLogin  The login of the person to follow.
+   * @param authPersonId          The ID of the authenticated person.
+   * @param personToUnfollowLogin The login of the person to follow.
    * @throws RuntimeException If an error occurs during database access.
    */
   @Override
   public void follow(@NonNull Long authPersonId, @NonNull String personToUnfollowLogin) {
     updateFollow(authPersonId, personToUnfollowLogin,
-        "INSERT INTO person_subscriptions(person_id, subscription_id) " +
-            "VALUES (%d, %d) ON CONFLICT DO NOTHING");
+        "INSERT INTO person_subscriptions(person_id, subscription_id) "
+            + "VALUES (%d, %d) ON CONFLICT DO NOTHING");
   }
 
   /**
    * Unfollow another user by removing the subscription relationship from the database.
    *
-   * @param authPersonId           The ID of the authenticated person.
-   * @param personToUnfollowLogin  The login of the person to unfollow.
+   * @param authPersonId          The ID of the authenticated person.
+   * @param personToUnfollowLogin The login of the person to unfollow.
    * @throws RuntimeException If an error occurs during database access.
    */
   @Override
