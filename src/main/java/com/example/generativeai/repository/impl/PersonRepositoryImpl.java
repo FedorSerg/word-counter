@@ -3,9 +3,11 @@ package com.example.generativeai.repository.impl;
 import com.example.generativeai.entity.PersonEntity;
 import com.example.generativeai.repository.PersonRepository;
 import com.example.generativeai.utils.HibernateSessionUtils;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
+import java.util.NoSuchElementException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
@@ -27,6 +29,9 @@ public class PersonRepositoryImpl implements PersonRepository {
       criteria.select(root).where(cb.equal(root.get("login"), login));
 
       return session.createQuery(criteria).getSingleResult();
+    } catch (NoResultException e) {
+      throw new NoSuchElementException(
+          String.format("Login %s was not found in database", login));
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
