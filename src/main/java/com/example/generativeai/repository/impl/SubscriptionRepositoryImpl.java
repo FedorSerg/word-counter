@@ -19,27 +19,25 @@ public class SubscriptionRepositoryImpl implements SubscriptionRepository {
   private final HibernateSessionUtils<AuthorizedUserEntity> hibernateSessionUtils;
 
   @Override
-  public void follow(@NonNull Long authPersonId, @NonNull String personToFollowLogin) {
-    PersonEntity p = personRepository.findByLogin(personToFollowLogin);
-    try (Session session = hibernateSessionUtils.getSession()) {
-      Transaction transaction = session.beginTransaction();
-      session.createNativeMutationQuery(String.format(
-          "INSERT INTO person_subscriptions VALUES (%d, %d) ON CONFLICT DO NOTHING",
-          authPersonId, p.getId())).executeUpdate();
-      transaction.commit();
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
+  public void follow(@NonNull Long authPersonId, @NonNull String personToUnfollowLogin) {
+    updateFollow(authPersonId, personToUnfollowLogin,
+        "INSERT INTO person_subscriptions(person_id, subscription_id) " +
+            "VALUES (%d, %d) ON CONFLICT DO NOTHING");
   }
 
   @Override
   public void unfollow(@NonNull Long authPersonId, @NonNull String personToUnfollowLogin) {
+    updateFollow(authPersonId, personToUnfollowLogin,
+        "DELETE FROM person_subscriptions WHERE person_id = %d AND subscription_id = %d");
+  }
+
+  private void updateFollow(@NonNull Long authPersonId, @NonNull String personToUnfollowLogin,
+                            @NonNull String sql) {
     PersonEntity p = personRepository.findByLogin(personToUnfollowLogin);
     try (Session session = hibernateSessionUtils.getSession()) {
       Transaction transaction = session.beginTransaction();
       session.createNativeMutationQuery(String.format(
-          "DELETE FROM person_subscriptions WHERE person_id = %d AND subscription_id = %d",
-          authPersonId, p.getId())).executeUpdate();
+          sql, authPersonId, p.getId())).executeUpdate();
       transaction.commit();
     } catch (Exception e) {
       throw new RuntimeException(e);

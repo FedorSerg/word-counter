@@ -70,7 +70,7 @@ public class HibernateSessionUtils<T> {
     }
   }
 
-  public T findDataById(@NonNull Class<T> type, Object id) {
+  public T findDataById(@NonNull Class<T> type, @NonNull Object id) {
     try (Session session = this.getSession()) {
       return session.get(type, id);
     } catch (Exception e) {
@@ -89,4 +89,15 @@ public class HibernateSessionUtils<T> {
     }
   }
 
+  public Object save(T entity) {
+    Object id;
+    try (Session session = this.getSession()) {
+      Transaction transaction = session.beginTransaction();
+      id = session.save(entity); // deprecated, but 'session.persist(entity)' does not return ID
+      transaction.commit();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+    return id;
+  }
 }

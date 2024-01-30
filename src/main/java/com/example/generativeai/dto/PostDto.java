@@ -15,4 +15,5 @@ public class PostDto {
   private String body;
   private String authorLogin;
 
+  private Integer likeCount;
 }

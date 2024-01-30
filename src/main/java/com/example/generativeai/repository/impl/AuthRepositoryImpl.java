@@ -29,14 +29,8 @@ public class AuthRepositoryImpl implements AuthRepository {
     AuthorizedUserEntity newAuthUser = AuthorizedUserEntity.builder()
         .person(personRepository.findByLogin(personLogin))
         .build();
-    try (Session session = hibernateSessionUtils.getSession()) {
-      this.dropAuthorizedPerson();
-      Transaction transaction = session.beginTransaction();
-      session.persist(newAuthUser);
-      transaction.commit();
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
+    this.dropAuthorizedPerson();
+    hibernateSessionUtils.save(newAuthUser);
   }
 
   @Override

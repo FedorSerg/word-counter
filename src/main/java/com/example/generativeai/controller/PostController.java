@@ -32,22 +32,23 @@ public class PostController {
   }
 
   @GetMapping("/all/followed")
-  public String getPostsByFollowedAuthors() {
-    return "Get Posts by followed authors";
-  }
-
-  @GetMapping("/authorLogin/{authorLogin}")
-  public String getPostsByAuthorLogin(@PathVariable String authorLogin) {
-    return "Get Posts by author: " + authorLogin;
+  public ResponseEntity<List<PostDto>> getPostsByFollowedAuthors() {
+    return ResponseEntity.of(Optional.of(
+        postService.getPostsByFollowedAuthors()
+    ));
   }
 
   @PostMapping
-  public String createPost(@RequestBody PostDto dto) {
-    return "Create Post: " + dto.getTitle();
+  public ResponseEntity<PostDto> createPost(@RequestBody PostDto dto) {
+    return ResponseEntity.of(Optional.of(
+        postService.createAndReturn(dto)
+    ));
   }
 
   @PutMapping("/update-like/{id}")
-  public String updatePost(@PathVariable Long id, @RequestBody PostDto dto) {
-    return "Update Post with ID " + id + " to: " + dto.getTitle();
+  public ResponseEntity<PostDto> updateLikeOnPost(@PathVariable Long id) {
+    return ResponseEntity.of(Optional.of(
+        postService.updateLikeAndReturn(id)
+    ));
   }
 }
