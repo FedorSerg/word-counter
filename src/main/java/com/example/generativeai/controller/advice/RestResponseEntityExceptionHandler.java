@@ -42,8 +42,8 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
    * Handles generic exceptions and returns an INTERNAL_SERVER_ERROR response.
    */
   @ExceptionHandler(Exception.class)
-  protected ResponseEntity<Object> handle500InternalServerError(Exception ex, WebRequest request) {
-    // Log the exception
+  protected ResponseEntity<Object> handle500InternalServerError(Exception ex,
+                                                                WebRequest request) {
     return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(),
         HttpStatus.INTERNAL_SERVER_ERROR, request);
   }

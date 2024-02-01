@@ -7,6 +7,7 @@ import com.example.generativeai.entity.PersonEntity;
 import com.example.generativeai.entity.PostEntity;
 import com.example.generativeai.repository.AuthRepository;
 import com.example.generativeai.repository.PostRepository;
+import com.example.generativeai.service.AuthService;
 import com.example.generativeai.service.PostService;
 import java.util.List;
 import lombok.NonNull;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Service;
 public class PostServiceImpl implements PostService {
 
   private final PostRepository postRepository;
+  private final AuthService authService;
   private final AuthRepository authRepository;
 
   /**
@@ -42,8 +44,8 @@ public class PostServiceImpl implements PostService {
    */
   @Override
   public List<PostDto> getPostsByFollowedAuthors() {
-    PersonEntity authPerson = authRepository.getAuthorizedPerson();
-    return postRepository.findAllBySubscriptions(authPerson).stream()
+    Long authPersonId = authService.checkIfLoggedInAndReturnAuthPersonId();
+    return postRepository.findAllBySubscriptions(authPersonId).stream()
         .map(this::mapEntityToDto).collect(toList());
   }
 
@@ -55,6 +57,7 @@ public class PostServiceImpl implements PostService {
    */
   @Override
   public PostDto createAndReturn(@NonNull PostDto dto) {
+    authService.checkIfLoggedInAndReturnAuthPersonId();
     PersonEntity authPerson = authRepository.getAuthorizedPerson();
     PostEntity newEntity = PostEntity.builder()
         .title(dto.title()).body(dto.body()).author(authPerson)
@@ -70,8 +73,8 @@ public class PostServiceImpl implements PostService {
    */
   @Override
   public PostDto updateLikeAndReturn(@NonNull Long postId) {
-    PersonEntity authPerson = authRepository.getAuthorizedPerson();
-    return mapEntityToDto(postRepository.updateLikeOnPost(authPerson, postId));
+    Long authPersonId = authService.checkIfLoggedInAndReturnAuthPersonId();
+    return mapEntityToDto(postRepository.updateLikeOnPost(authPersonId, postId));
   }
 
   private PostDto mapEntityToDto(@NonNull PostEntity entity) {
