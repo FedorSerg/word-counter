@@ -4,10 +4,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class GenerativeaiApplicationTests {
+class GenerativeaiApplicationTests extends AbstractTest {
 
-	@Test
-	void contextLoads() {
-	}
-
+  @Test
+  void contextLoads() {
+  }
 }
