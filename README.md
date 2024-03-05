@@ -12,9 +12,9 @@ The __Hibernate__ is used to persist the post and user data in the database.
   - add these environment variables for the application, changing the XXXs to real values:
   `POSTGRESQL_HOST=XXX;POSTGRESQL_PORT=XXX;POSTGRESQL_DATABASE=XXX;POSTGRESQL_USER=XXX;POSTGRESQL_PASSWORD=XXX`
 - If you want to run database locally (you need to have Docker installed):
-  - go to the project root in terminal (src\main\java\com\example\generativeai) and run `docker-compose up`. You can check the file docker-compose.yml and update the ports or the database name, password and login there
+  - go to the project root in terminal (src\main\java\com\example\demo) and run `docker-compose up`. You can check the file docker-compose.yml and update the ports or the database name, password and login there
   - if you didn't change the docker-compose.yml, then add these environment variables for the application:
-  `POSTGRESQL_HOST=localhost;POSTGRESQL_PORT=5000;POSTGRESQL_DATABASE=genai;POSTGRESQL_PASSWORD=genai;POSTGRESQL_USER=genai`
+  `POSTGRESQL_HOST=localhost;POSTGRESQL_PORT=5000;POSTGRESQL_DATABASE=demo;POSTGRESQL_PASSWORD=demo;POSTGRESQL_USER=demo`
 
 ### Generate code coverage report
 Run `mvn clean install` command. The report will be generated in 'target/site/jacoco'.

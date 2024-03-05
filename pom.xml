@@ -8,9 +8,9 @@
 		<version>3.2.2</version>
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>generativeai</artifactId>
+	<artifactId>demo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>generativeai</name>
+	<name>demo</name>
 	<description>Project for AI tasks</description>
 	<properties>
 		<java.version>17</java.version>
@@ -102,7 +102,7 @@
 				<version>0.8.7</version>
 				<configuration>
 					<excludes>
-						<exclude>**/GenerativeaiApplication.class</exclude>
+						<exclude>**/DemoApplication.class</exclude>
 					</excludes>
 				</configuration>
 				<executions>
