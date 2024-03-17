@@ -1,21 +1,3 @@
-spring:
-  jpa:
-    hibernate:
-      ddl-auto: validate
-
-  datasource:
-    url: jdbc:postgresql://${POSTGRESQL_HOST}:${POSTGRESQL_PORT}/${POSTGRESQL_DATABASE}
-    username: ${POSTGRESQL_USER}
-    password: ${POSTGRESQL_PASSWORD}
-    type: com.zaxxer.hikari.HikariDataSource
-    hikari:
-      auto-commit: false
-
-project:
-  db:
-    show-hibernate-scripts: false
-    driver-class: org.postgresql.Driver
-
 logging:
   level:
     root: info
